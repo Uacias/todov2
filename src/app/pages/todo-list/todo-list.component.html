@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <div class="wrapper__card" *ngFor="let item of todoService.todoList | async">
+    <h4 class="wrapper__card__header--primary">{{ item }}</h4>
+    <button
+      class="wrapper__card__button--preview"
+      routerLink="/todo-list/{{ item }}"
+    >
+      Preview
+    </button>
+  </div>
+</div>
