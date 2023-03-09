@@ -1,4 +1,27 @@
 <div class="wrapper">
-  <input [(ngModel)]="todo" class="wrapper__input--primary" />
-  <button (click)="addTodo(todo)" class="wrapper__button--add">Add</button>
+  <!-- <input [(ngModel)]="todo" class="wrapper__input--primary" />
+  <button (click)="addTodo(todo)" class="wrapper__button--add">Add</button> -->
+  <form class="wrapper__form" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <input
+      type="text"
+      id="title"
+      class="wrapper__form__input--primary wrapper__form__input--title"
+      placeholder="Title"
+      formControlName="title"
+      [ngClass]="{
+        'wrapper__form__input--invalid':
+          !taskForm.get('title')?.valid && taskForm.get('title')?.touched
+      }"
+    />
+
+    <input
+      type="text"
+      id="description"
+      class="wrapper__form__input--primary wrapper__form__input--description"
+      placeholder="Description"
+      formControlName="description"
+    />
+
+    <button type="submit" class="wrapper__form__button--add">Add</button>
+  </form>
 </div>

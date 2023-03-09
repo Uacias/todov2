@@ -5,13 +5,19 @@
 
 }
 
-.wrapper__button--add {
+.wrapper__form {
+  display: flex;
+  justify-content: space-around;
+}
+
+.wrapper__form__button--add {
   all: unset;
   cursor: pointer;
+  width: 100%;
 
 }
 
-.wrapper__input--primary, .wrapper__button--add {
+.wrapper__form__input--primary, .wrapper__form__button--add {
   font-size: 24px;
   padding: 8px;
   border-radius: 4px;
@@ -19,12 +25,22 @@
   margin-inline: 4px;
 }
 
+.wrapper__form__input--title {
+  max-width: 20%;
+}
 
-.wrapper__button--add:hover {
+.wrapper__form__input--description {
+  min-width: 70%;
+}
+
+.wrapper__form__input--invalid {
+  background-color: #ffdddd;
+}
+
+.wrapper__form__button--add:hover {
   background-color: rgb(110,110,110);
 
 }
-
 
 
 
