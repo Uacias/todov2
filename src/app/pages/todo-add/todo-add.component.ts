@@ -8,20 +8,7 @@ import { TodoService } from 'src/app/services/todo.service';
   styleUrls: ['./todo-add.component.scss'],
 })
 export class TodoAddComponent implements OnInit {
-  // todos: string[] = [];
-  // todo: string = '';
-
-  constructor(private readonly todoService: TodoService) {
-    // this.todoService.todoList.subscribe((todos) => (this.todos = todos));
-  }
-
-  // addTodo(todo: string) {
-  //   const _todos = [...this.todos];
-  //   _todos.push(todo);
-  //   this.todoService.todoList.next(_todos);
-  //   this.todo = '';
-  //   console.log(this.todos);
-  // }
+  constructor(private readonly todoService: TodoService) {}
 
   taskForm!: FormGroup;
 
@@ -38,8 +25,12 @@ export class TodoAddComponent implements OnInit {
   }
 
   onSubmit() {
-    const title: string = this.taskForm.get('title')?.value;
-    const description: string = this.taskForm.get('description')?.value;
-    this.todoService.onCreateTodo({ title, description });
+    if (this.taskForm.valid) {
+      const title: string = this.taskForm.get('title')?.value;
+      const description: string = this.taskForm.get('description')?.value;
+      this.todoService.onCreateTodo({ title, description });
+    } else {
+      alert('Form is invalid');
+    }
   }
 }

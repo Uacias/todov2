@@ -1,3 +1,10 @@
 <div class="wrapper">
-  <h2 class="wrapper__header--primary">Selected todo: {{ todo }}</h2>
+  <h2 class="wrapper__header--primary">Selected todo: {{ todo?.id }}</h2>
+  <h3>Title: {{ todo?.title }}</h3>
+  <p>{{ todo?.description }}</p>
+  <div class="wrapper__actions">
+    <button class="warpper__actions__button--delete" (click)="removeTodo()">
+      Delete
+    </button>
+  </div>
 </div>

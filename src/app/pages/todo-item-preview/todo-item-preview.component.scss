@@ -8,3 +8,20 @@
 .wrapper__header--primary {
   font-weight: bold;
 }
+
+.warpper__actions__button--delete {
+  font-size: 24px;
+  all: unset;
+  cursor: pointer;
+  padding: 4px;
+  border: 2px solid black;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-block: 16px;
+
+  background-color: #f18383;
+}
+
+.warpper__actions__button--delete:hover {
+  background-color: #fcadad;
+}

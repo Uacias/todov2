@@ -1,18 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-interface TodosResponse {
-  [key: string]: any;
-}
+import { Todo } from '../shared/interfaces/todo.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-  todoList = new BehaviorSubject<string[]>([]);
-
   constructor(private http: HttpClient) {}
 
   onCreateTodo(todoData: { title: string; description: string }): void {
@@ -21,19 +16,35 @@ export class TodoService {
         'https://ng-todo-cf99a-default-rtdb.firebaseio.com/todos.json',
         todoData
       )
-      .subscribe((response) => console.log(response));
+      .subscribe();
   }
 
-  fetchTodos() {
-    // TODO: PROBLEM WITH MAPPING - WORK IT OUT
-    this.http
+  fetchTodos(): Observable<Todo[]> {
+    return this.http
       .get('https://ng-todo-cf99a-default-rtdb.firebaseio.com/todos.json')
-      // .pipe(map(responseData => {
-      //   const todos = [];
-      //   for(const key in responseData) {
-      //     todos.push(responseData[key]);
-      //   }
-      // }))
-      .subscribe((todos) => console.log(todos));
+      .pipe(
+        map((response: any) => {
+          const resultTodos: Todo[] = [];
+          for (const key in response) {
+            if (response.hasOwnProperty(key)) {
+              const todo: Todo = { id: key, label: response[key].title };
+              resultTodos.push(todo);
+            }
+          }
+          return resultTodos;
+        })
+      );
+  }
+
+  fetchTodoById(id: string | null) {
+    return this.http
+      .get(`https://ng-todo-cf99a-default-rtdb.firebaseio.com/todos/${id}.json`)
+      .pipe(map((response: any) => ({ id: id, ...response })));
+  }
+
+  deleteToDoById(id: string) {
+    return this.http.delete(
+      `https://ng-todo-cf99a-default-rtdb.firebaseio.com/todos/${id}.json`
+    );
   }
 }

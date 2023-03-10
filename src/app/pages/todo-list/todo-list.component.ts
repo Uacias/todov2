@@ -7,8 +7,11 @@ import { TodoService } from 'src/app/services/todo.service';
   styleUrls: ['./todo-list.component.scss'],
 })
 export class TodoListComponent implements OnInit {
+  todos!: any[];
   constructor(public readonly todoService: TodoService) {}
   ngOnInit(): void {
-    this.todoService.fetchTodos();
+    this.todoService.fetchTodos().subscribe((todos) => {
+      this.todos = todos;
+    });
   }
 }

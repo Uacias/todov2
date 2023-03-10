@@ -11,18 +11,22 @@
 .wrapper__card {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   padding: 8px;
   margin-bottom: 8px;
-  border-bottom: 1px solid rgb(110,110,110);
+  border-bottom: 1px solid rgb(110, 110, 110);
+}
 
+.wrapper__card--content {
+  display: flex;
+  justify-content: space-between;
 }
 
 .wrapper__card__header--primary {
   margin-inline-end: 8px;
   font-size: 24px;
 }
-
 
 .wrapper__card__button--preview {
   all: unset;
@@ -35,9 +39,4 @@
 
 .wrapper__card__button--preview:hover {
   background-color: rgb(110, 110, 110);
-
 }
-
-
-
-
