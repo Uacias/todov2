@@ -1,6 +1,4 @@
 <div class="wrapper">
-  <!-- <input [(ngModel)]="todo" class="wrapper__input--primary" />
-  <button (click)="addTodo(todo)" class="wrapper__button--add">Add</button> -->
   <form class="wrapper__form" [formGroup]="taskForm" (ngSubmit)="onSubmit()">
     <input
       type="text"

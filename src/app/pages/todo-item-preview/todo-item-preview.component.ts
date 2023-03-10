@@ -8,14 +8,16 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./todo-item-preview.component.scss'],
 })
 export class TodoItemPreviewComponent implements OnInit {
-  todo: any;
-  id!: string | null;
-
   constructor(
     private readonly todoService: TodoService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
+
+  todos!: any[];
+  todo: any;
+  id!: string | null;
+  
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.todoService.fetchTodoById(this.id).subscribe((todo) => {
@@ -24,7 +26,11 @@ export class TodoItemPreviewComponent implements OnInit {
   }
 
   removeTodo() {
-    this.todoService.deleteToDoById(this.todo.id).subscribe();
-    this.router.navigate(['/todo-list']);
+    this.todoService.deleteToDoById(this.todo.id).subscribe(() => {
+      this.router.navigate(['/todo-list']);
+      this.todoService.fetchTodos().subscribe((todos) => {
+        this.todos = todos;
+      });
+    });
   }
 }

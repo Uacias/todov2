@@ -3,7 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Todo } from '../shared/interfaces/todo.interface';
-
+import { FIREBASE_ENDPOINT } from '../shared/endpoints/firebase-endpoints';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,40 +11,31 @@ export class TodoService {
   constructor(private http: HttpClient) {}
 
   onCreateTodo(todoData: { title: string; description: string }): void {
-    this.http
-      .post(
-        'https://ng-todo-cf99a-default-rtdb.firebaseio.com/todos.json',
-        todoData
-      )
-      .subscribe();
+    this.http.post(`${FIREBASE_ENDPOINT}.json`, todoData).subscribe();
   }
 
   fetchTodos(): Observable<Todo[]> {
-    return this.http
-      .get('https://ng-todo-cf99a-default-rtdb.firebaseio.com/todos.json')
-      .pipe(
-        map((response: any) => {
-          const resultTodos: Todo[] = [];
-          for (const key in response) {
-            if (response.hasOwnProperty(key)) {
-              const todo: Todo = { id: key, label: response[key].title };
-              resultTodos.push(todo);
-            }
+    return this.http.get(`${FIREBASE_ENDPOINT}.json`).pipe(
+      map((response: any) => {
+        const resultTodos: Todo[] = [];
+        for (const key in response) {
+          if (response.hasOwnProperty(key)) {
+            const todo: Todo = { id: key, label: response[key].title };
+            resultTodos.push(todo);
           }
-          return resultTodos;
-        })
-      );
+        }
+        return resultTodos;
+      })
+    );
   }
 
   fetchTodoById(id: string | null) {
     return this.http
-      .get(`https://ng-todo-cf99a-default-rtdb.firebaseio.com/todos/${id}.json`)
+      .get(`${FIREBASE_ENDPOINT}/${id}.json`)
       .pipe(map((response: any) => ({ id: id, ...response })));
   }
 
   deleteToDoById(id: string) {
-    return this.http.delete(
-      `https://ng-todo-cf99a-default-rtdb.firebaseio.com/todos/${id}.json`
-    );
+    return this.http.delete(`${FIREBASE_ENDPOINT}/${id}.json`);
   }
 }

@@ -29,6 +29,7 @@ export class TodoAddComponent implements OnInit {
       const title: string = this.taskForm.get('title')?.value;
       const description: string = this.taskForm.get('description')?.value;
       this.todoService.onCreateTodo({ title, description });
+      this.taskForm.reset();
     } else {
       alert('Form is invalid');
     }
